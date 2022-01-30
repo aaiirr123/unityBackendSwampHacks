@@ -1,0 +1,61 @@
+<script>
+
+      attackList = [
+        'sword',
+        'fireball',
+        'axe',
+        'boulder',
+        'lightning'
+      ];
+      const attackListLeng = attackList.length;
+      
+      fourButtons = [];
+      function getRando()
+      {
+        while(fourButtons.length < 4)
+        {
+          randomNum = Math.floor(Math.random() * attackListLeng);
+          if(fourButtons.includes(randomNum)) continue;
+          else fourButtons.push(randomNum);
+        }
+      }
+
+  let player = {
+      name: "player1",
+      attack: "blank"
+  };
+  async function fetchPlayers() {
+      let url = 'http://127.0.0.1:3000/api/attack';
+      await fetch(url)
+      .then(res => res.json())
+      .then(json => {
+          console.log("First user in the array:");
+          console.log(json[0]);
+          console.log("Name of the first user in the array:");
+          console.log(json[0].name);
+  })
+  }
+
+  async function postPlayerOne(attackVal)
+  {
+    location.reload();
+    player.attack = attackVal;
+    fetch('http://127.0.0.1:3000/api/attack/1', {
+      method: 'PUT',
+      body: JSON.stringify(player),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(res => res.json())
+      .then(json => console.log(json));
+  }
+</script>
+
+<%- include('_partial/_header'); -%>
+
+    <h1>Welcome to my first Node.js app</h1>
+      <div class="btn-group">
+        <button onclick= <%= "postPlayerOne(" + '"' + attackList[button1] + '"' +  ")" %> type="button" class="btn btn-primary btn-lg"><%= attackList[button1] %></button>
+        <button onclick= <%= "postPlayerOne(" + '"' + attackList[button2] + '"' +  ")" %> type="button" class="btn btn-primary btn-lg"><%= attackList[button2] %></button>
+        <button onclick= <%= "postPlayerOne(" + '"' + attackList[button3] + '"' +  ")" %> type="button" class="btn btn-primary btn-lg"><%= attackList[button3] %></button>
+        <button onclick= <%= "postPlayerOne(" + '"' + attackList[button4] + '"' +  ")" %> type="button" class="btn btn-primary btn-lg"><%= attackList[button4] %></button>
+      </div>
+<%- include('_partial/_footer'); -%>

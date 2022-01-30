@@ -1,17 +1,18 @@
 var express = require("express");
-const { append } = require("express/lib/response");
 const Joi = require('joi');
 var router = express.Router();
 router.use(express.json());
 
-const obj1 = {id:1, name: "Player 1", attack: 7};
-const obj2 = {id:2, name: "Player 2", attack: 9};
+const obj1 = {id:1, name: "Player 1", attack: "none"};
+const obj2 = {id:2, name: "Player 2", attack: "none"};
 
 playerArr = [obj1, obj2];
 
 router.get("/attack", function(req, res){
+    console.log("request worked")
     res.json([obj1, obj2]);
 });
+
 
 router.get("/attack/:id", function(req, res){
     const player = playerArr.find(c => c.id == parseInt(req.params.id));
@@ -43,8 +44,10 @@ router.put('/attack/:id', (req,res) => {
 
 router.post('/attack', (req, res) => {
 
+    console.log("made it here");
     const schema = {
-        name: Joi.string().required()
+        name: Joi.string().required(),
+        attack: Joi.string().required(),
     }
 
     const result = Joi.validate(req.body, schema);
