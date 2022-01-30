@@ -1,39 +1,39 @@
 <script>
-  
-  let player = {
-      name: "Player 1",
-      attack: "blank"
-  };
-  async function fetchPlayers() {
-      let url = 'http://127.0.0.1:3000/api/attack';
-      await fetch(url)
-      .then(res => res.json())
-      .then(json => {
-          console.log("First user in the array:");
-          console.log(json[0]);
-          console.log("Name of the first user in the array:");
-          console.log(json[0].name);
-  })
-  }
 
-  async function postPlayerOne(attackVal)
-  {
-    location.reload();
-    player.attack = attackVal;
-    fetch('http://127.0.0.1:3000/api/attack/1', {
-      method: 'PUT',
-      body: JSON.stringify(player),
-      headers: { 'Content-Type': 'application/json' }
-    }).then(res => res.json())
-      .then(json => console.log(json));
-  }
+let player = {
+    name: "Player 2",
+    attack: "blank"
+};
+async function fetchPlayers() {
+    let url = 'http://127.0.0.1:3000/api/attack';
+    await fetch(url)
+    .then(res => res.json())
+    .then(json => {
+        console.log("First user in the array:");
+        console.log(json[0]);
+        console.log("Name of the first user in the array:");
+        console.log(json[0].name);
+})
+}
+
+async function postPlayerOne(attackVal)
+{
+  location.reload();
+  player.attack = attackVal;
+  fetch('http://127.0.0.1:3000/api/attack/2', {
+    method: 'PUT',
+    body: JSON.stringify(player),
+    headers: { 'Content-Type': 'application/json' }
+  }).then(res => res.json())
+    .then(json => console.log(json));
+}
 </script>
 
 <%- include('_partial/_header'); -%>
 <div class="text-center">
   <div class="jumbotron jumbotron-fluid my-5 py-5">
     <div class="container my-3 py-3">
-      <h1 class="display-4 my-4 mp-4">Welcome Player 1</h1>
+      <h1 class="display-4 my-4 mp-4">Welcome Player 2</h1>
         <div class="btn-group btn-group mx-10 px-10">
           <button onclick= <%= "postPlayerOne(" + '"' + attackList[button1] + '"' +  ")" %> type="button" class="btn mx-2 px-5 btn-primary btn-lg" style="background-color: #097969;"><%= attackList[button1] %></button>
           <button onclick= <%= "postPlayerOne(" + '"' + attackList[button2] + '"' +  ")" %> type="button" class="btn mx-2 px-5 btn-primary btn-lg" style="background-color: #097969;"><%= attackList[button2] %></button>
